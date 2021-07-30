@@ -3,56 +3,57 @@ import scala.io.StdIn._
 object SeatReservation extends App{
   var airports= Array("Colombo","Mumbai","Delhi","Kolkata")
 
-  var colomboToDelhi = Array(Array(0,0,0,0,0,0),Array(0,0,0,0,0,0),Array(0,0,0,0,0,0),Array(0,0,0,0,0,0),Array(0,0,0,0,0,0))
-  var delhiToMumbai = Array(Array(0,0,0,0,0,0),Array(0,0,0,0,0,0),Array(0,0,0,0,0,0),Array(0,0,0,0,0,0),Array(0,0,0,0,0,0))
-  var mumbaiToKolkata = Array(Array(0,0,0,0,0,0),Array(0,0,0,0,0,0),Array(0,0,0,0,0,0),Array(0,0,0,0,0,0),Array(0,0,0,0,0,0))
+  var colomboToDelhi = Array(Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
+  var delhiToMumbai = Array(Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
+  var mumbaiToKolkata = Array(Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
+
 
   // Colombo -> Delhi -> Mumbai -> Kolkata
 
-  def reserveSeat(airport:String, destination:String, m:Int, n:Int):Unit={
-    var airportId:Int = 0
+  def reserveSeat(startingPlace:String, destination:String, m:Int, n:Int):Unit={
+    var startingPlaceId:Int = 0
     var destinationId:Int = 0
     var count:Int = 0
 
     for(k <- airports){
-      if(k == airport){
-        airportId = count
+      if(k == startingPlace){
+        startingPlaceId = count
       }
       else if(k == destination){
         destinationId=count
       }
       count=count+1
     }
-    count=airportId
+    count=startingPlaceId
     for(j<- airports){
-      if(j == airport && destinationId>count){
+      if(j == startingPlace && destinationId>count){
         j match{
-          case "Colombo" => if(colomboToDelhi(m)(n) == 1){
+          case "Colombo" => if(colomboToDelhi(m-1)(n-1) == 1){
             println("The seat is cannot reserve")
           }
             else{
-            colomboToDelhi(m)(n) =1
+            colomboToDelhi(m-1)(n-1) =1
             println("Reserve this seat")
           }
-          case "Delhi" => if(delhiToMumbai(m)(n) == 1){
+          case "Delhi" => if(delhiToMumbai(m-1)(n-1) == 1){
             println("The seat is cannot reserve")
           }
           else{
-            delhiToMumbai(m)(n) =1
+            delhiToMumbai(m-1)(n-1) =1
             println("Reserve this seat")
           }
-          case "Mumbai" => if(mumbaiToKolkata(m)(n) == 1){
+          case "Mumbai" => if(mumbaiToKolkata(m-1)(n-1) == 1){
             println("The seat is cannot reserve")
           }
           else{
-            mumbaiToKolkata(m)(n) =1
+            mumbaiToKolkata(m-1)(n-1) =1
             println("Reserve this seat")
           }
         }
       }
     }
-    if(airportId <= destinationId){
-      for(k <- airportId to destinationId){
+    if(startingPlaceId <= destinationId){
+      for(k <- startingPlaceId to destinationId){
         print(airports(k))
         if(destinationId != k){
           print("->")
@@ -61,13 +62,52 @@ object SeatReservation extends App{
     }
     println("")
   }
+  var NewArray = Array(Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
 
   def display():Unit={
+    var i,j=0
     for(a <- colomboToDelhi){
+      i=0
       for(b <- a){
+        NewArray(j)(i) = b
+        i = i+1
+      }
+      j = j+1
+
+    }
+    j=0
+    for(a <- delhiToMumbai){
+      i=0
+      for(b <- a){
+        if(b==1){
+          NewArray(j)(i) = b
+        }
+
+        i = i+1
+      }
+      j = j+1
+
+    }
+    j=0
+    for(a <- mumbaiToKolkata){
+      i=0
+      for(b <- a){
+        if(b==1){
+          NewArray(j)(i) = b
+        }
+
+        i = i+1
+      }
+      j = j+1
+
+    }
+    for(a<-NewArray){
+      for(b<-a)
+      {
         print(b+" ")
       }
       println("")
+
     }
   }
 
@@ -84,7 +124,7 @@ object SeatReservation extends App{
   println("")
   reserveSeat("Colombo","Mumbai",2,4)
   println("")
-  reserveSeat("Mumbai","Kolkata",2,4)
+  reserveSeat("Delhi","Kolkata",3,2)
   println("")
   reserveSeat("Colombo","Delhi",2,3)
   println("")
