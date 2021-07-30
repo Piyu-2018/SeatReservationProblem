@@ -3,9 +3,9 @@ import scala.io.StdIn._
 object SeatReservation extends App{
   var airports= Array("Colombo","Mumbai","Delhi","Kolkata")
 
-  var colomboToDelhi = Array(Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
-  var delhiToMumbai = Array(Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
-  var mumbaiToKolkata = Array(Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
+  var colomboToDelhi = Array(Array(0,0,0,0,0),Array(0,0,1,1,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
+  var delhiToMumbai = Array(Array(0,0,0,0,0),Array(0,0,0,1,0),Array(0,1,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
+  var mumbaiToKolkata = Array(Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,1,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
 
 
   // Colombo -> Delhi -> Mumbai -> Kolkata
@@ -65,6 +65,7 @@ object SeatReservation extends App{
   var NewArray = Array(Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0),Array(0,0,0,0,0))
 
   def display():Unit={
+    println("Reserved seats")
     var i,j=0
     for(a <- colomboToDelhi){
       i=0
@@ -111,7 +112,8 @@ object SeatReservation extends App{
     }
   }
 
-  println("Enter airport name: ")
+  display()
+  println("Enter starting airport name: ")
   var airportName:String = readLine()
   println("Enter destination: ")
   var destinationName:String = readLine()
@@ -121,13 +123,7 @@ object SeatReservation extends App{
   var columnNO:Int = readInt()
 
   reserveSeat(airportName,destinationName,rowNo,columnNO)
-  println("")
-  reserveSeat("Colombo","Mumbai",2,4)
-  println("")
-  reserveSeat("Delhi","Kolkata",3,2)
-  println("")
-  reserveSeat("Colombo","Delhi",2,3)
-  println("")
   display()
+
 
 }
